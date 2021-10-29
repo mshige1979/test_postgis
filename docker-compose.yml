@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  # DBサーバ
+  db:
+    # コンテナ名
+    container_name: db
+    # build
+    build:
+      context: .
+      dockerfile: ./services/db/Dockerfile
+    # 環境設定
+    environment:
+      TZ: "Asia/Tokyo"
+      POSTGRES_DB: sample1
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    # コンテナの中に入る
+    tty: true
+    # ボリューム
+    volumes:
+      - pg_data_test:/var/lib/postgresql/data
+    # ポート開放
+    ports:
+      - 5432:5432
+
+# 名前付きボリュームをdockerホストの管理下で作成
+volumes:
+  # postgresqk
+  pg_data_test: {}
